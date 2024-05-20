@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use  App\Models\user;
 use Hash;
 use Session;
@@ -77,7 +78,7 @@ class CustomAuthenticationController extends Controller
             }
             $userDetails = User::where('email',$data['email'])->first();   
             //generate random password
-            $random_password = str_random(8); 
+            $random_password = Str::random(8);
             //secure password
             $new_password = bcrypt($random_password);
             //update password
