@@ -34,12 +34,14 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" placeholder="Enter Password" name="password" value="">  
+                        <input type="password" class="form-control" placeholder="Enter Password" name="password" value=""> 
+                        <small class="form-text text-muted">Password must have 8 characters and have one special character.</small> 
                         <span class="text-danger">@error('password'){{ $message }}@enderror</span>
                     </div> 
                     <div class="form-group">
                         <label for="password_confirmation">Confirm Password</label>
                         <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" value="">  
+                        <small class="form-text text-muted">Password must have 8 characters and have one special character.</small>
                         <span class="text-danger">@error('passwords'){{ $message }}@enderror</span>
                     </div> 
                     <div class="form-group">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use  App\Models\user;
 use Hash;
 use Session;
+use Mail;
 
 class CustomAuthenticationController extends Controller
 {
@@ -19,7 +20,7 @@ class CustomAuthenticationController extends Controller
        $request->validate([
         'name'=>'required',
         'email'=> 'required|email|unique:users',
-        'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/'],
+        'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/'],
         'roles'=>'required'
        ]);
        $user = new User();
@@ -29,7 +30,7 @@ class CustomAuthenticationController extends Controller
        $user->roles=$request->roles;
        $res =$user->save();
        if($res){
-        return back()->with('success', 'You have registered successfully'); 
+        return redirect('/login')->with('success', 'You have registered successfully'); 
        }
        else{
         return back()->with('fail','Something wrong');
@@ -39,7 +40,7 @@ class CustomAuthenticationController extends Controller
     public function loginUser(Request $request){
         $request->validate([
             'email'=> 'required|email',
-            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/'],
+            'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/'],
         ]);
         $user= User::where('email','=',$request->email)->first();
         if($user){
@@ -73,7 +74,26 @@ class CustomAuthenticationController extends Controller
             $userCount = User::where('email', $data['email'])->count();
             if($userCount == 0){
                 return redirect()->back()->with('fail', 'This email is not registered');
-            }die;
+            }
+            $userDetails = User::where('email',$data['email'])->first();   
+            //generate random password
+            $random_password = str_random(8); 
+            //secure password
+            $new_password = bcrypt($random_password);
+            //update password
+            User::where('email',$data['email'])->update(['password'=>$new_password]);
+            //Send Forgot Password email code 
+            $email= $data['email'];
+            $name=$userDetails ;
+            $messageData = [
+                'email'=>$email, 
+                'name'=>$name,
+                'password'=>$random_password 
+            ];
+            Mail::send('emails.forgotpassword', $messageData,function($message)use($email){
+                $message->to($email)->subject('New password - Radiplus Website');
+            });
+
         }
         return view('auth.forgot_password');
     }
