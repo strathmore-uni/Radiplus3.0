@@ -45,16 +45,16 @@
                         <span class="text-danger">@error('passwords'){{ $message }}@enderror</span>
                     </div> 
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="form-control" name="role">
-                            <option value="">Select Role</option> <!-- Default option -->
-                            <option value="doctor">Doctor</option>
-                            <option value="patient">Patient</option>
-                            <option value="radiologist">Radiologist</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                        <span class="text-danger">@error('role'){{ $message }}@enderror</span>
-                    </div>
+    <label for="role">Role</label>
+    <select class="form-control" name="role">
+        <option value="">Select Role</option> <!-- Default option -->
+        <option value="doctor">Doctor</option>
+        <option value="patient">Patient</option>
+        <option value="radiologist">Radiologist</option>
+        <option value="admin">Admin</option>
+    </select>
+    <span class="text-danger">@error('role'){{ $message }}@enderror</span>
+</div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="Submit">Register</button>
                     </div>

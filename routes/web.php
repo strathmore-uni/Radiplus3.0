@@ -24,3 +24,4 @@ Route::post('/login-user', [CustomAuthenticationController::class, 'loginUser'])
 Route::get('/dashboard',[CustomAuthenticationController::class,'dashboard'])->middleware('isLoggedIn');
 Route::get('/logout', [CustomAuthenticationController::class,'logout']);
 Route::match(['get', 'post'], 'forgot-password', [CustomAuthenticationController::class, 'forgotPassword'])->name('forgot-password');
+Route::get('/activate/{token}', [CustomAuthenticationController::class, 'activateUser'])->name('activate');
