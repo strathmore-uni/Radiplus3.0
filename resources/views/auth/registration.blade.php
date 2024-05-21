@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radiplus</title>
+    <link href="{{ asset('app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
     crossorigin="anonymous">
+    
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3" style="margin-top: 20px;">
-                <h4>Registration</h4>    
+                <h4>Welcome to Radiplus</h4> 
+                <h5>Register here</h5>   
                 <hr>
                 <form action="{{ route('register-user') }}" method="post">
                     @csrf
@@ -37,6 +40,7 @@
                         <input type="password" class="form-control" placeholder="Enter Password" name="password" value=""> 
                         <small class="form-text text-muted">Password must have 8 characters and have one special character.</small> 
                         <span class="text-danger">@error('password'){{ $message }}@enderror</span>
+    <small class="text-muted">Password must be at least 8 characters long ,include special characters(@,#,*).</small>
                     </div> 
                     <div class="form-group">
                         <label for="password_confirmation">Confirm Password</label>
