@@ -33,6 +33,7 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control" placeholder="Enter Password" 
                     name="password" value="">
+                    <small class="form-text text-muted">Password must have 8 characters and have one special character.</small>
                     <span class="text-danger">@error('password'){{$message}}@enderror</span>
                 </div> <br>
                 <div class="form-group">

@@ -37,26 +37,28 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" placeholder="Enter Password" name="password" value="">  
+                        <input type="password" class="form-control" placeholder="Enter Password" name="password" value=""> 
+                        <small class="form-text text-muted">Password must have 8 characters and have one special character.</small> 
                         <span class="text-danger">@error('password'){{ $message }}@enderror</span>
     <small class="text-muted">Password must be at least 8 characters long ,include special characters(@,#,*).</small>
                     </div> 
                     <div class="form-group">
                         <label for="password_confirmation">Confirm Password</label>
                         <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" value="">  
+                        <small class="form-text text-muted">Password must have 8 characters and have one special character.</small>
                         <span class="text-danger">@error('passwords'){{ $message }}@enderror</span>
                     </div> 
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="form-control" name="role">
-                            <option value="">Select Role</option> <!-- Default option -->
-                            <option value="doctor">Doctor</option>
-                            <option value="patient">Patient</option>
-                            <option value="radiologist">Radiologist</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                        <span class="text-danger">@error('role'){{ $message }}@enderror</span>
-                    </div>
+    <label for="role">Role</label>
+    <select class="form-control" name="role">
+        <option value="">Select Role</option> <!-- Default option -->
+        <option value="doctor">Doctor</option>
+        <option value="patient">Patient</option>
+        <option value="radiologist">Radiologist</option>
+        <option value="admin">Admin</option>
+    </select>
+    <span class="text-danger">@error('role'){{ $message }}@enderror</span>
+</div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="Submit">Register</button>
                     </div>
