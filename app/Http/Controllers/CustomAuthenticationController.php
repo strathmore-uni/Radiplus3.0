@@ -44,7 +44,7 @@ class CustomAuthenticationController extends Controller
     public function loginUser(Request $request){
         $request->validate([
             'email'=> 'required|email',
-            'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/'],
+            'password' => ['required', 'min:8', ],
         ]);
         $user= User::where('email','=',$request->email)->first();
         if($user){
