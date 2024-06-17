@@ -25,7 +25,6 @@ class CustomAuthenticationController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
-            'role' => 'required',
             'profile_picture' => ['nullable', 'image', 'max:2048'],
         ]);
 
@@ -33,7 +32,6 @@ class CustomAuthenticationController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->role = $request->role;
         $user->activation_token = Str::random(60); // Generate activation token
 
         if ($request->hasFile('profile_picture')) {

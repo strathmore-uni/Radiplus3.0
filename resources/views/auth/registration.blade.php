@@ -46,17 +46,6 @@
                         <span class="text-danger">@error('password_confirmation'){{ $message }}@enderror</span>
                     </div> 
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="form-control" name="role">
-                            <option value="">Select Role</option> <!-- Default option -->
-                            <option value="doctor">Doctor</option>
-                            <option value="patient">Patient</option>
-                            <option value="radiologist">Radiologist</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                        <span class="text-danger">@error('role'){{ $message }}@enderror</span>
-                    </div>
-                    <div class="form-group">
                         <label for="profile_picture">Profile Picture</label>
                         <input type="file" class="form-control" id="profile_picture" name="profile_picture">
                         <span class="text-danger">@error('profile_picture'){{ $message }}@enderror</span>
