@@ -11,6 +11,10 @@ class User extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'activation_token',
+        'name', 'email', 'password', 'role', 'activation_token','profile_picture',
     ];
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 };
