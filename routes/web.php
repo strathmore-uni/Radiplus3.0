@@ -61,9 +61,9 @@ Route::middleware(['isLoggedIn'])->group(function () {
     // Record management routes (available to radiologists and referring doctors)
     Route::middleware(['role:radiologist,referring_doctor'])->prefix('records')->name('records.')->group(function () {
         Route::get('/', [RecordController::class, 'index'])->name('index');
-        Route::get('/{record}', [RecordController::class, 'show'])->name('show');
         Route::get('/create', [RecordController::class, 'create'])->name('create');
         Route::post('/', [RecordController::class, 'store'])->name('store');
+        Route::get('/{record}', [RecordController::class, 'show'])->name('show');
         Route::delete('/{record}', [RecordController::class, 'destroy'])->name('destroy');
     });
 });
