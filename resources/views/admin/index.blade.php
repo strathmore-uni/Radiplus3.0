@@ -26,11 +26,17 @@
                     </thead>
                     <tbody>
                         @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->role }}</td>
-                        </tr>
+                        <form action="{{ route('admin.assignRole', $user->id) }}" method="POST">
+                           @csrf
+                            @method('PATCH')    
+                           <label for="role">Assign Role to {{ $user->name }}</label>
+                            <select name="role" id="role">
+                               @foreach ($roles as $role)
+                              <option value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endforeach
+                              </select>
+                             <button type="submit">Assign Role</button>
+                         </form>
                         @endforeach
                     </tbody>
                 </table>

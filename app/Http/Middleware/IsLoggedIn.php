@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AlreadyLoggedIn
+class IsLoggedIn
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            return redirect('/dashboard')->with('info', 'You are already logged in.');
+        if (!Auth::check()) {
+            return redirect('/login')->with('fail', 'You need to login first.');
         }
 
         return $next($request);
