@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\User; // Example model import if needed
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        return view('dashboard', compact('user'));
+        // Controller logic here
     }
 }

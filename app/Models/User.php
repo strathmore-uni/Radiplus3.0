@@ -17,4 +17,13 @@ class User extends Model
     {
         return $this->belongsToMany(Role::class);
     }
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+        // Accessor for full name (if you store first and last names separately)
+        public function getFullNameAttribute() {
+            return "{$this->name} ";
+        }
+    
 };

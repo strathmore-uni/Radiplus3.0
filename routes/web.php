@@ -8,17 +8,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\UserManagementController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // Public routes
 Route::get('/', function () {
     return view('welcome');
@@ -32,11 +21,27 @@ Route::post('/register-user', [CustomAuthenticationController::class, 'registerU
 Route::match(['get', 'post'], '/forgot-password', [CustomAuthenticationController::class, 'forgotPassword'])->name('forgot-password');
 Route::get('/activate/{token}', [CustomAuthenticationController::class, 'activateUser'])->name('activate');
 Route::get('/logout', [CustomAuthenticationController::class, 'logout'])->name('logout');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Authenticated routes (requires login)
-Route::middleware(['isLoggedIn'])->group(function () {
-    // Dashboard route for authenticated users
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', function () {
+    // Check if the user is authenticated
+    if (auth()->check()) {
+        $user = auth()->user();
+
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.index');
+        } elseif ($user->hasRole('patient')) {
+            return redirect()->route('patient.dashboard');
+        } else {
+            return view('dashboard');
+        }
+    } else {
+        // Redirect to login if the user is not authenticated
+        return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');
+    }
+})->name('dashboard');
+
 
     // Profile management routes
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -66,4 +71,10 @@ Route::middleware(['isLoggedIn'])->group(function () {
         Route::get('/{record}', [RecordController::class, 'show'])->name('show');
         Route::delete('/{record}', [RecordController::class, 'destroy'])->name('destroy');
     });
-});
+
+    // Patient dashboard routes
+    Route::middleware(['role:patient'])->group(function () {
+        Route::get('/patient/dashboard', [DashboardController::class, 'index'])->name('patient.dashboard');
+        // Add more patient-specific routes as needed
+    });
+

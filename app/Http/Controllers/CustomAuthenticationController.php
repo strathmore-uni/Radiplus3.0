@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class CustomAuthenticationController extends Controller
 {
@@ -54,13 +55,17 @@ class CustomAuthenticationController extends Controller
         ]);
     
         $user = User::where('email', $request->email)->first();
+        
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $request->session()->put('loginId', $user->id);
-                if ($user->role === 'admin') {
-                    return redirect()->route('admin.index');
+                if ($user->hasRole('admin')) {
+                    return redirect()->route('admin.dashboard');
+                } elseif ($user->hasRole('patient')) {
+                    return redirect()->route('patient.dashboard');
+                } else {
+                    return redirect()->route('dashboard');
                 }
-                return redirect()->route('dashboard');
             } else {
                 return back()->with('fail', 'Incorrect password');
             }
@@ -69,15 +74,6 @@ class CustomAuthenticationController extends Controller
         }
     }
     
-    public function dashboard() {
-        $data = null;
-        if (Session::has('loginId')) {
-            $data = User::with('roles')->find(Session::get('loginId'));
-        }
-        return view('dashboard', compact('data'));
-    }
-    
-
     public function logout(){
         if (Session::has('loginId')) {
             Session::pull('loginId');
@@ -116,17 +112,16 @@ class CustomAuthenticationController extends Controller
         return view('auth.forgot_password');
     }
 
-    public function activateUser($token){
-        $user = User::where('activation_token', $token)->first();
-        if ($user) {
-            $user->update(['activation_token' => null, 'active' => true]);
-            return redirect('/login')->with('success', 'Your account has been activated. You can now login.');
-        } else {
-            return redirect('/login')->with('fail', 'Invalid activation token.');
-        }
+  public function activateUser($token){
+    $user = User::where('activation_token', $token)->first();
+    if ($user) {
+        $user->update(['activation_token' => null, 'active' => true]);
+        return redirect('/login')->with('success', 'Your account has been activated. You can now login.');
+    } else {
+        return redirect('/login')->with('fail', 'Invalid activation token.');
     }
-
-    private function sendActivationEmail($user){
+}
+ function sendActivationEmail($user){
         $data = [
             'user' => $user,
             'activation_link' => route('activate', $user->activation_token)
