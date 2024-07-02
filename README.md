@@ -37,7 +37,7 @@ Radiplus is a comprehensive solution designed to manage and streamline radiology
 ### Steps
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/ris.git
+   https://github.com/DebraJuma/Radiplus3.0.git
    cd ris
 
    
