@@ -39,32 +39,26 @@ Radiplus is a comprehensive solution designed to manage and streamline radiology
    ```bash
    https://github.com/DebraJuma/Radiplus3.0.git
    cd ris
-
-   
    ```
 
 2.
-**Install dempendencies: Into your terminal type the following commands:**
+**Install dependencies and copy env .file: Into your terminal type the following commands:**
   ```bash
+  
 composer install
-npm install
 ```
 ```
-
-
-3. **Create a copy of the .env file:**
 
 ```bash
 cp .env.example .env
-
 ```
-4.**Generate an application key:**
+3.**Generate an application key:**
 
 ```bash
 Copy code
 php artisan key:generate
 ```
-5.**Set up your database:**
+4.**Set up your database:**
 
 Create a MySQL database for the project.
 Update the .env file with your database credentials.
@@ -74,17 +68,17 @@ DB_DATABASE=your_database
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
-6 .**Run database migrations and seeders:**
+5 .**Run database migrations and seeders:**
 
 ```bash
 php artisan migrate--seed
 Compile assets:
 ```
 
-7.**Start the development server:**
+6.**Start the development server:**
 
 ```bash
-Copy code
+
 php artisan serve
 ```
 
