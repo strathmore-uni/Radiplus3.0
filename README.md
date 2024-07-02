@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RADIPLUS: A Collaborative Tool For Radiology Information Sharing
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-## About Laravel
+## Introduction
+Radiplus is a comprehensive solution designed to manage and streamline radiology workflows. It allows for efficient handling of patient information, scheduling, imaging results, and reporting.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
+- Patient Management: Add, edit, and view patient details.
+- Doctor Management: Manage doctor profiles and schedules.
+- Appointment Scheduling: Book, reschedule, and cancel appointments.
+- Imaging Records: Store and retrieve patient imaging results.
+- Reporting: Generate detailed reports for patients and doctors.
+- User Roles: Different access levels for administrators, doctors, and technicians.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technologies Used
+- **Backend**: Laravel (PHP Framework)
+- **Frontend**: Bootstrap, Blade Templating
+- **Database**: MySQL
+- **Other**: Composer, Laravel Mix
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
+### Prerequisites
+- PHP >= 7.4
+- Composer
+- MySQL
 
-## Learning Laravel
+### Steps
+1. **Clone the repository:**
+   ```bash
+   https://github.com/DebraJuma/Radiplus3.0.git
+   cd ris
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2.
+**Install dependencies and copy env .file: Into your terminal type the following commands:**
+  ```bash
+  
+composer install
+```
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+cp .env.example .env
+```
+3.**Generate an application key:**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+Copy code
+php artisan key:generate
+```
+4.**Set up your database:**
 
-## Laravel Sponsors
+Create a MySQL database for the project.
+Update the .env file with your database credentials.
+env
+```
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+5 .**Run database migrations and seeders:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+php artisan migrate--seed
+Compile assets:
+```
 
-### Premium Partners
+6.**Start the development server:**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
 
+php artisan serve
+```
+
+
+## Configuration
+### Environment Variables
+Adjust the environment variables in the .env file as needed. Key variables include:
+
+- APP_NAME
+- APP_ENV
+- APP_DEBUG
+- DB_CONNECTION
+- MAIL_*
+## Usage
+1. **Access the application:**
+   Open your browser and navigate to `http://localhost:8000`.
+
+2. **Admin Login:**
+   - Username: `admin@example.com`
+   - Password: `password`
+
+3. **Managing Patients:**
+   - Navigate to the Patients section to add, edit, or view patient information.
+   - You can also view the history of appointments and medical records for each patient.
+   - Use the search function to quickly find patient records.
+
+4. **Managing Doctors:**
+   - Navigate to the Doctors section to add, edit, or view doctor profiles.
+   - Assign doctors to specific departments and manage their schedules.
+   - View doctor availability and appointment history.
+
+5. **Managing Radiologists:**
+   - Navigate to the Radiologists section to add, edit, or view radiologist profiles.
+   - Manage the schedules and assignments of radiologists.
+   - Ensure that radiologists have access to relevant patient imaging records.
+   - View radiologist workload and performance statistics.
+
+6. **Scheduling Appointments:**
+   - Use the Schedule section to book, reschedule, or cancel appointments.
+   - Select the patient and the doctor/radiologist for the appointment.
+   - Set the date and time, and add any necessary notes for the appointment.
+   - View the calendar to see upcoming appointments and availability.
+
+7. **Viewing Imaging Records:**
+   - Access the Imaging section to view and manage patient imaging results.
+   - Upload new imaging records and link them to the appropriate patient profile.
+   - Allow doctors and radiologists to add notes and interpretations to the imaging records.
+
+8. **Generating Reports:**
+   - Use the Reports section to generate detailed reports for patients, doctors, and radiologists.
+   - Customize reports based on date ranges, departments, and other criteria.
+   - Export reports to PDF or Excel for easy sharing and documentation
 ## Contributing
+We welcome contributions to the Radiology Information System project. Please follow these steps:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
+- Fork the repository.
+- Create a new branch: git checkout -b feature-name.
+- Make your changes and commit them: git commit -m 'Add new feature'.
+- Push to the branch: git push origin feature-name.
+- Submit a pull request.
 ## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Contact
+For any inquiries or issues, please contact:
+
+Email: debra.juma@strathmore.edu or Mercy.mwaniki@strathmore.edu
+GitHub Issues: GitHub Issues
+Thank you for using our Radiology Information System!
+
+
+
