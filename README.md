@@ -29,10 +29,16 @@ Radiplus is a comprehensive solution designed to manage and streamline radiology
 - **Other**: Composer, Laravel Mix
 
 ## Installation
+## Installation
+
 ### Prerequisites
 - PHP >= 7.4
+  - [Download PHP](https://www.php.net/downloads.php)
 - Composer
+  - [Download Composer](https://getcomposer.org/download/)
 - MySQL
+  - [Download MySQL](https://dev.mysql.com/downloads/mysql/)
+
 
 ### Steps
 1. **Clone the repository:**
