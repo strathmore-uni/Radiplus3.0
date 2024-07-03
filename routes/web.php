@@ -10,7 +10,14 @@ use App\Http\Controllers\UserManagementController;
 
 // Public routes
 Route::get('/', function () {
-    return view('welcome');
+    // Check if the user is authenticated
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    } else {
+        return redirect()->route('login');
+    }
+
+    //return view('welcome');
 });
 
 // Authentication routes
@@ -24,8 +31,9 @@ Route::get('/logout', [CustomAuthenticationController::class, 'logout'])->name('
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Authenticated routes (requires login)
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     // Check if the user is authenticated
+    die('Dashboard route.');
     if (auth()->check()) {
         $user = auth()->user();
 
@@ -40,8 +48,12 @@ Route::get('/dashboard', function () {
         // Redirect to login if the user is not authenticated
         return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');
     }
-})->name('dashboard');
-
+})->name('dashboard');*/
+    // Dashboards
+    Route::get('/admin-dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/patient-dashboard', [DashboardController::class, 'patient'])->name('patient.dashboard');
+    Route::get('/doctor-dashboard', [DashboardController::class, 'doctor'])->name('doctor.dashboard');
+    Route::get('/radiologist-dashboard', [DashboardController::class, 'radiologist'])->name('radiologist.dashboard');
 
     // Profile management routes
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -53,6 +65,7 @@ Route::get('/dashboard', function () {
         Route::patch('/assign-role/{user}', [AdminController::class, 'assignRole'])->name('assignRole');
         Route::get('/create-user', [AdminController::class, 'createUser'])->name('createUser');
         Route::post('/create-user', [AdminController::class, 'storeUser'])->name('storeUser');
+        Route::post('/admin-patients', [DashboardController::class, 'admin'])->name('admin.patients');
 
         // User management routes
         Route::prefix('users')->name('users.')->group(function () {
@@ -72,9 +85,12 @@ Route::get('/dashboard', function () {
         Route::delete('/{record}', [RecordController::class, 'destroy'])->name('destroy');
     });
 
-    // Patient dashboard routes
-    Route::middleware(['role:patient'])->group(function () {
+    // Patient routes
+    /*Route::middleware(['role:patient'])->group(function () {
         Route::get('/patient/dashboard', [DashboardController::class, 'index'])->name('patient.dashboard');
         // Add more patient-specific routes as needed
-    });
+    });*/
+    Route::post('/patient-profile', [DashboardController::class, 'patient'])->name('patient.profile');
+    Route::post('/patient-appointments', [DashboardController::class, 'patient'])->name('patient.appointments');
+
 
