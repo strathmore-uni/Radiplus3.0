@@ -55,17 +55,20 @@ class CustomAuthenticationController extends Controller
         ]);
     
         $user = User::where('email', $request->email)->first();
+
+        //die($user->name);
         
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
-                $request->session()->put('loginId', $user->id);
-                if ($user->hasRole('admin')) {
+                $request->session()->put('loginEmail', $user->email);
+                $request->session()->put('loginName', $user->name);
+                /*if ($user->hasRole('admin')) {
                     return redirect()->route('admin.dashboard');
                 } elseif ($user->hasRole('patient')) {
                     return redirect()->route('patient.dashboard');
-                } else {
+                } else {*/
                     return redirect()->route('dashboard');
-                }
+                //}
             } else {
                 return back()->with('fail', 'Incorrect password');
             }
