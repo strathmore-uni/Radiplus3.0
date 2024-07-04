@@ -3,10 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthenticationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RadiologistController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\ReferralController;
 
 // Public routes
 Route::get('/', function () {
@@ -49,6 +55,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
         return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');
     }
 })->name('dashboard');*/
+
     // Dashboards
     Route::get('/admin-dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
     Route::get('/patient-dashboard', [DashboardController::class, 'patient'])->name('patient.dashboard');
@@ -60,13 +67,19 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // Admin routes (requires admin role)
-    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/admin-patients', [PatientController::class, 'index'])->name('admin.patients');
+    Route::get('/admin-doctors', [DoctorController::class, 'index'])->name('admin.doctors');
+    Route::get('/admin-radiologists', [RadiologistController::class, 'index'])->name('admin.radiologists');
+    Route::get('/admin.appointments', [AppointmentController::class, 'index'])->name('admin.appointments');
+    Route::get('/admin.settings', [SettingController::class, 'index'])->name('admin.settings');
+
+       Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::patch('/assign-role/{user}', [AdminController::class, 'assignRole'])->name('assignRole');
         Route::get('/create-user', [AdminController::class, 'createUser'])->name('createUser');
         Route::post('/create-user', [AdminController::class, 'storeUser'])->name('storeUser');
-        Route::post('/admin-patients', [DashboardController::class, 'admin'])->name('admin.patients');
-
+     
+       
         // User management routes
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', [UserManagementController::class, 'index'])->name('index');
@@ -92,5 +105,18 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     });*/
     Route::post('/patient-profile', [DashboardController::class, 'patient'])->name('patient.profile');
     Route::post('/patient-appointments', [DashboardController::class, 'patient'])->name('patient.appointments');
-
-
+    Route::resource('appointments', App\Http\Controllers\AppointmentController::class);
+    Route::resource('doctors', App\Http\Controllers\DoctorController::class);
+    Route::resource('patients', App\Http\Controllers\PatientController::class);
+    Route::resource('radiologists', App\Http\Controllers\RadiologistController::class);
+    Route::resource('settings', App\Http\Controllers\SettingController::class);
+    
+    Route::middleware(['role:radiologist,referring_doctor'])->prefix('referrals')->name('referrals.')->group(function () {
+        Route::get('/', [ReferralController::class, 'index'])->name('index');
+        Route::get('/create', [ReferralController::class, 'create'])->name('create');
+        Route::post('/', [ReferralController::class, 'tore'])->name('store');
+        Route::get('/{referral}', [ReferralController::class, 'how'])->name('show');
+        Route::get('/{referral}/edit', [ReferralController::class, 'edit'])->name('edit');
+        Route::patch('/{referral}', [ReferralController::class, 'update'])->name('update');
+        Route::delete('/{referral}', [ReferralController::class, 'destroy'])->name('destroy');
+    });

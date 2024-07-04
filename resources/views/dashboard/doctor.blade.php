@@ -148,34 +148,46 @@
                 </ol>
             </nav>
 
-            <!-- Referrals Section -->
-            <section id="referrals">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Patient Referrals</h5>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Patient Name</th>
-                                <th>Referral Date</th>
-                                <th>Radiologist Assigned</th>
-                                <th>Referral Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                           @foreach ($referrals as $referral) { ?>
-                            <tr>
-                                <td><?= $referral['patient_name']?></td>
-                                <td><?= $referral['referral_date']?></td>
-                                <td><?= $referral['radiologist_name']?></td>
-                                <td><?= $referral['status']?></td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+          <!-- Referrals Section -->
+<section id="referrals">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Patient Referrals</h5>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Referral Date</th>
+                    <th>Referred By (Doctor)</th>
+                    <th>Radiologist Assigned</th>
+                    <th>Referral Status</th>
+                    <th>Imaging Exam Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($referrals as $referral) {
+                    <tr>
+                        <td>{{ $referral->patient->name }}</td>
+                        <td>{{ $referral->referral_date }}</td>
+                        <td>{{ $referral->doctor->name }}</td>
+                        <td>{{ $referral->radiologist->name }}</td>
+                        <td>{{ $referral->status }}</td>
+                        <td>
+                            @if ($referral->imaging_exam_status == 'pending')
+                                <span class="badge badge-warning">Pending</span>
+                            @elseif ($referral->imaging_exam_status == 'in_progress')
+                                <span class="badge badge-info">In Progress</span>
+                            @elseif ($referral->imaging_exam_status == 'completed')
+                                <span class="badge badge-success">Completed</span>
+                            @endif
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
             <!-- Patients Section -->
             <section id="patients">

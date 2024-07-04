@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -115,19 +115,19 @@
                         <a class="nav-link active" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{-- route('admin.patients') --}}"><i class="fas fa-user-injured"></i> Patients</a>
+                        <a class="nav-link" href="{{ route('admin.patients') }}"><i class="fas fa-user-injured"></i> Patients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{-- route('admin.doctors') --}}"><i class="fas fa-user-md"></i> Doctors</a>
+                        <a class="nav-link" href="{{ route('admin.doctors') }}"><i class="fas fa-user-md"></i> Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{-- route('admin.radiologists') --}}"><i class="fas fa-x-ray"></i> Radiologists</a>
+                        <a class="nav-link" href="{{ route('admin.radiologists') }}"><i class="fas fa-x-ray"></i> Radiologists</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{-- route('admin.appointments') --}}"><i class="fas fa-calendar-check"></i> Appointments</a>
+                        <a class="nav-link" href="{{ route('admin.appointments') }}"><i class="fas fa-calendar-check"></i> Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{-- route('admin.settings') --}}"><i class="fas fa-cogs"></i> Settings</a>
+                        <a class="nav-link" href="{{route('admin.settings') }}"><i class="fas fa-cogs"></i> Settings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
