@@ -11,13 +11,13 @@ class Doctor extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'email',
-        'password',
-        'phone',
-        'address',
         'specialty',
-        'bio',
+        'phone_number',
+        'address',
+        'about',
         'profile_picture',
     ];
 

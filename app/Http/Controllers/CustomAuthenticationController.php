@@ -124,7 +124,7 @@ class CustomAuthenticationController extends Controller
         return redirect('/login')->with('fail', 'Invalid activation token.');
     }
 }
- function sendActivationEmail($user){
+function sendActivationEmail($user){
         $data = [
             'user' => $user,
             'activation_link' => route('activate', $user->activation_token)

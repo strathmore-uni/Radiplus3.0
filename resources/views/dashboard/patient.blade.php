@@ -20,7 +20,7 @@
                         <!-- Profile Picture and Name -->
                         <div class="card">
                             <div class="card-body">
-                                <img src="{{ asset('storage/'. $user->profile_picture) }}" alt="Profile Picture" class="img-fluid">
+                            <img src="{{ Storage::url(Auth::user()->profile_picture) }}" alt="Profile Picture">
                                 <h5>{{ $user->name }}</h5>
                             </div>
                         </div>
