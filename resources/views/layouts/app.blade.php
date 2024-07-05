@@ -50,6 +50,7 @@
                                 <button class="btn btn-danger ml-2" type="submit">Logout</button>
                             </form>
                         </li>
+
                     </ul>
                 </div>
             </nav>

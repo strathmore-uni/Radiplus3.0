@@ -8,6 +8,8 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,6 +73,10 @@
             background-color: #343a40;
         }
         .card {
+            margin-bottom: 20px;
+        }
+        #calendar {
+            max-width: 100%;
             margin-bottom: 20px;
         }
     </style>
@@ -158,19 +164,15 @@
                 </div>
             </div>
 
+            <!-- Calendar Section -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+
             <!-- Dummy Features Section -->
             <div class="row">
-                <!-- Calendar -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Calendar</h5>
-                            <p class="card-text">Here you can view upcoming events and appointments.</p>
-                            <div id="calendar"></div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Recent Activities -->
                 <div class="col-md-6">
                     <div class="card">
@@ -195,6 +197,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+
     crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js"></script>
 <script>
     // Dummy data for the analytics chart
     const ctx = document.getElementById('analyticsChart').getContext('2d');
@@ -219,9 +223,29 @@
         }
     });
 
-    // Dummy calendar initialization
-    const calendarEl = document.getElementById('calendar');
-    calendarEl.innerHTML = 'Calendar goes here... (Add calendar integration as needed)';
+    // Initialize FullCalendar
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['dayGrid'],
+            events: [
+                {
+                    title: 'Event 1',
+                    start: '2024-07-05'
+                },
+                {
+                    title: 'Event 2',
+                    start: '2024-07-08'
+                },
+                {
+                    title: 'Event 3',
+                    start: '2024-07-10'
+                }
+                // Add more events as needed
+            ]
+        });
+        calendar.render();
+    });
 </script>
 </body>
 </html>

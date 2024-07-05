@@ -14,6 +14,7 @@ use App\Http\Controllers\RecordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ReferralController;
 
+
 // Public routes
 Route::get('/', function () {
     // Check if the user is authenticated
@@ -35,6 +36,7 @@ Route::match(['get', 'post'], '/forgot-password', [CustomAuthenticationControlle
 Route::get('/activate/{token}', [CustomAuthenticationController::class, 'activateUser'])->name('activate');
 Route::get('/logout', [CustomAuthenticationController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 // Authenticated routes (requires login)
 /*Route::get('/dashboard', function () {
