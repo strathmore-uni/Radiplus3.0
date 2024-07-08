@@ -137,6 +137,44 @@ Adjust the environment variables in the .env file as needed. Key variables inclu
    - Use the Reports section to generate detailed reports for patients, doctors, and radiologists.
    - Customize reports based on date ranges, departments, and other criteria.
    - Export reports to PDF or Excel for easy sharing and documentation
+  
+
+     RADIPLUS
+├── Administration
+│   ├── User Management
+│   │   ├── Admins
+│   │   ├── Doctors
+│   │   └── Radiologists
+│   ├── Role Management
+│   │   ├── Permissions
+│   │   └── Access Levels
+│   └── Reports
+├── Patient Management
+│   ├── Patient Profiles
+│   ├── Medical History
+│   ├── Appointments
+│   └── Imaging Records
+├── Doctor Management
+│   ├── Doctor Profiles
+│   ├── Schedules
+│   └── Specializations
+├── Radiologist Management
+│   ├── Radiologist Profiles
+│   ├── Schedules
+│   └── Imaging Records Access
+├── Appointment Scheduling
+│   ├── Booking
+│   ├── Rescheduling
+│   └── Cancellation
+├── Imaging Records
+│   ├── Upload
+│   ├── View
+│   └── Interpretation
+└── Reporting
+    ├── Patient Reports
+    ├── Doctor Reports
+    └── Radiologist Reports
+
 ## Contributing
 We welcome contributions to the Radiology Information System project. Please follow these steps:
 
