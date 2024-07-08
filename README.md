@@ -140,41 +140,75 @@ Adjust the environment variables in the .env file as needed. Key variables inclu
   
 
 RADIPLUS
+
 ├── Administration
 
 │   ├── User Management
+
 │   │   ├── Admins
+
 │   │   ├── Doctors
+
 │   │   └── Radiologists
+
 │   ├── Role Management
+
 │   │   ├── Permissions
+
 │   │   └── Access Levels
+
 │   └── Reports
+
 ├── Patient Management
+
 │   ├── Patient Profiles
+
 │   ├── Medical History
+
 │   ├── Appointments
+
 │   └── Imaging Records
+
 ├── Doctor Management
+
 │   ├── Doctor Profiles
+
 │   ├── Schedules
+
 │   └── Specializations
+
 ├── Radiologist Management
+
 │   ├── Radiologist Profiles
+
 │   ├── Schedules
+
 │   └── Imaging Records Access
+
 ├── Appointment Scheduling
+
 │   ├── Booking
+
 │   ├── Rescheduling
+
 │   └── Cancellation
+
 ├── Imaging Records
+
 │   ├── Upload
+
 │   ├── View
+
 │   └── Interpretation
+
 └── Reporting
+
     ├── Patient Reports
+
     ├── Doctor Reports
+
     └── Radiologist Reports
+
 
 ## Contributing
 We welcome contributions to the Radiology Information System project. Please follow these steps:
