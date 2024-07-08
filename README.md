@@ -141,6 +141,7 @@ Adjust the environment variables in the .env file as needed. Key variables inclu
 
 RADIPLUS
 ├── Administration
+
 │   ├── User Management
 │   │   ├── Admins
 │   │   ├── Doctors
