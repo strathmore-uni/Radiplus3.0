@@ -139,7 +139,7 @@ Adjust the environment variables in the .env file as needed. Key variables inclu
    - Export reports to PDF or Excel for easy sharing and documentation
   
 
-     RADIPLUS
+RADIPLUS
 ├── Administration
 │   ├── User Management
 │   │   ├── Admins
