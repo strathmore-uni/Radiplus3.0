@@ -201,13 +201,14 @@ RADIPLUS
 
 │   └── Interpretation
 
-└── Reporting
+├── Reporting
 
-    ├── Patient Reports
+│   ├── Patients Reports
 
-    ├── Doctor Reports
+│   ├──Doctor Reports
 
-    └── Radiologist Reports
+│   └── Radiologist Reports
+
 
 
 ## Contributing
