@@ -1,5 +1,7 @@
 <?php
 
+// app/Http/Controllers/RadiologistController.php
+
 namespace App\Http\Controllers;
 
 use App\Models\Radiologist;
@@ -9,40 +11,56 @@ class RadiologistController extends Controller
 {
     public function index()
     {
+        // Display a listing of radiologists
         $radiologists = Radiologist::all();
-        return view('radiologists.index', compact('radiologists'));
+        return view('admin.radiologist.manage', compact('radiologists'));
     }
 
     public function create()
     {
-        return view('radiologists.create');
+        // Show the form for creating a new radiologist
+        return view('admin.radiologist.create');
     }
 
     public function store(Request $request)
     {
-        $radiologist = Radiologist::create($request->all());
-        return redirect()->route('radiologists.index');
-    }
+        // Store a new radiologist
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:radiologists',
+            'password' => 'required|confirmed',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
 
-    public function show(Radiologist $radiologist)
-    {
-        return view('radiologists.show', compact('radiologist'));
+        Radiologist::create($request->all());
+        return redirect()->route('radiologist.index');
     }
 
     public function edit(Radiologist $radiologist)
     {
-        return view('radiologists.edit', compact('radiologist'));
+        // Show the form for editing a radiologist
+        return view('admin.radiologist.edit', compact('radiologist'));
     }
 
     public function update(Request $request, Radiologist $radiologist)
     {
+        // Update a radiologist
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:radiologists,email,' . $radiologist->id,
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+
         $radiologist->update($request->all());
-        return redirect()->route('radiologists.index');
+        return redirect()->route('radiologist.index');
     }
 
     public function destroy(Radiologist $radiologist)
     {
+        // Delete a radiologist
         $radiologist->delete();
-        return redirect()->route('radiologists.index');
+        return redirect()->route('radiologist.index');
     }
 }

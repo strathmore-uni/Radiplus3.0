@@ -1,124 +1,132 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomAuthenticationController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RadiologistController;
-use App\Http\Controllers\RecordController;
-use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PharmachyController;
+use App\Http\Controllers\LabController;
+use App\Http\Controllers\radiologistController;
+use App\Http\Controllers\NotificationController;
 
 
-// Public routes
-Route::get('/', function () {
-    // Check if the user is authenticated
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    } else {
-        return redirect()->route('login');
-    }
+Route::get('/',[HomeController::class,'index']);
+Route::get('/home',[HomeController::class,'redirect'])->name('home')->middleware('auth',);
+Route::get('/all-doctors',[HomeController::class,'allDoctors'])->name('alldoctors');
+Route::get('/doctor-details/{id}',[HomeController::class,'doctorDetails'])->name('doctor-details');
 
-    //return view('welcome');
+//Blog Home
+Route::get('/all-blog',[HomeController::class,'allBlog'])->name('allblog');
+Route::get('/blog-details/{id}',[HomeController::class,'blogDetails'])->name('blog-details');
+
+
+//Appointment
+Route::post('/appointment',[HomeController::class,'appointment'])->name('appointment');
+Route::get('/myappointment',[HomeController::class,'myappointment'])->name('myappointment');
+Route::get('/cancel_appointment/{id}',[HomeController::class,'cancel_appointment'])->name('cancel_appointment');
+
+//Order
+Route::get('/myorder',[HomeController::class,'myorder'])->name('myorder');
+Route::get('/cancel_order/{id}',[HomeController::class,'cancelOrder'])->name('cancel_order');
+Route::get('/checkout/{id}',[HomeController::class,'checkout'])->name('checkout');
+Route::post('/order',[HomeController::class,'orderList'])->name('order');
+
+//About and Contact
+Route::get('/aboutus',[HomeController::class,'about'])->name('about');
+Route::resource('contact',ContactController::class);
+
+//Food
+Route::get('/foodpage',[HomeController::class,'foodpage'])->name('foodpage');
+
+//Query
+Route::get('/myquery',[HomeController::class,'myQuery'])->name('myquery');
+Route::get('/cancel_query/{id}',[HomeController::class,'cancel_query'])->name('cancel_query');
+
+//Prescription
+Route::get('/myaprescription',[HomeController::class,'myaPrescription'])->name('myaprescription');
+Route::get('/appoint_bill/{id}',[HomeController::class,'appointBill'])->name('appoint_bill');
+Route::get('/print-presc/{id}',[HomeController::class,'printPresc'])->name('print-presc');
+
+//Lab Report
+Route::get('/allreport',[HomeController::class,'allReport'])->name('all-report');
+Route::post('/add-lab/{id}',[HomeController::class,'addLab'])->name('add-lab');
+Route::get('/show-cartLab/',[HomeController::class,'showLabCart'])->name('show-cart-Lab');
+Route::get('/order-Lab/',[HomeController::class,'orderLabCash'])->name('order-Lab');
+Route::get('/cancel-lab-order/{id}',[HomeController::class,'cancelLabOrder'])->name('cancel-lab-order');
+Route::get('/show-lab-order/',[HomeController::class,'showLabOrder'])->name('show-lab-order');
+
+
+//Medicines
+Route::get('/allmedicine',[HomeController::class,'allMedicine'])->name('all-medicine');
+Route::post('/add-medicice/{id}',[HomeController::class,'addMedi'])->name('add-medicice');
+Route::get('/medi-details/{id}',[HomeController::class,'mediDetails'])->name('medi-details');
+Route::get('/show-cartMed/',[HomeController::class,'showCartMed'])->name('show-cartMed');
+Route::get('/order-Med/',[HomeController::class,'orderMedCash'])->name('order-Med');
+Route::get('/show-Medi-order/',[HomeController::class,'showMediOrder'])->name('show-Medi-order');
+
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'),])->group(function () {
+    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+    Route::resource('doctor',DoctorController::class);
+    Route::resource('blog',BlogController::class);
+    Route::resource('category',CategoryController::class);
+    Route::resource('food',FoodController::class);
+    Route::resource('users',UserController::class);
+    Route::resource('pharmachy',PharmachyController::class);
+    Route::resource('lab',LabController::class);
+    Route::resource('radiologist', RadiologistController::class);
 });
 
-// Authentication routes
-Route::get('/login', [CustomAuthenticationController::class, 'login'])->name('login')->middleware('alreadyLoggedIn');
-Route::post('/login', [CustomAuthenticationController::class, 'loginUser'])->name('login-user');
-Route::get('/registration', [CustomAuthenticationController::class, 'registration'])->name('registration')->middleware('alreadyLoggedIn');
-Route::post('/register-user', [CustomAuthenticationController::class, 'registerUser'])->name('register-user');
-Route::match(['get', 'post'], '/forgot-password', [CustomAuthenticationController::class, 'forgotPassword'])->name('forgot-password');
-Route::get('/activate/{token}', [CustomAuthenticationController::class, 'activateUser'])->name('activate');
-Route::get('/logout', [CustomAuthenticationController::class, 'logout'])->name('logout');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+//Appointment
+Route::get('/showappointment',[AdminController::class,'showappointment'])->name('showappointment');
+Route::get('/approve/{id}',[AdminController::class,'approve'])->name('approve');
+Route::get('/cancel/{id}',[AdminController::class,'cancel'])->name('cancel');
+Route::get('/history/{id}',[AdminController::class,'history'])->name('history');
+Route::post('/deleteappointment/{id}',[AdminController::class,'deleteappointment'])->name('deleteappointment');
+
+//Email
+Route::get('/emailview/{id}',[AdminController::class,'emailview'])->name('emailview');
+Route::post('/sendemail/{id}',[AdminController::class,'sendemail'])->name('sendemail');
+
+Route::get('/cancel_order/{id}',[AdminController::class,'cancel_order'])->name('cancel_order');
+Route::GET('/manage.order',[AdminController::class,'manageOrder'])->name('manage.order');
+Route::delete('/order-delete/{id}',[AdminController::class,'orderDelete'])->name('order-delete');
+Route::get('/approve-order/{id}',[AdminController::class,'approveOrder'])->name('approve-order');
+Route::get('/cancel-order/{id}',[AdminController::class,'cancelOrder'])->name('cancel-order');
 
 
-// Authenticated routes (requires login)
-/*Route::get('/dashboard', function () {
-    // Check if the user is authenticated
-    die('Dashboard route.');
-    if (auth()->check()) {
-        $user = auth()->user();
 
-        if ($user->hasRole('admin')) {
-            return redirect()->route('admin.index');
-        } elseif ($user->hasRole('patient')) {
-            return redirect()->route('patient.dashboard');
-        } else {
-            return view('dashboard');
-        }
-    } else {
-        // Redirect to login if the user is not authenticated
-        return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');
-    }
-})->name('dashboard');*/
+Route::get('/history/{id}',[AdminController::class,'history'])->name('history');
+Route::get('/showhistory',[AdminController::class,'showHistory'])->name('showhistory');
+Route::get('/cancelAppointDoc/{id}',[AdminController::class,'cancelAppointDoc'])->name('cancelAppointDoc');
 
-    // Dashboards
-    Route::get('/admin-dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
-    Route::get('/patient-dashboard', [DashboardController::class, 'patient'])->name('patient.dashboard');
-    Route::get('/doctor-dashboard', [DashboardController::class, 'doctor'])->name('doctor.dashboard');
-    Route::get('/radiologist-dashboard', [DashboardController::class, 'radiologist'])->name('radiologist.dashboard');
+Route::get('/pescrib/{id}',[AdminController::class,'pescrib'])->name('pescrib');
+Route::post('/doctor_prescrib/{id}',[AdminController::class,'doctorPres'])->name('doctor_prescrib');
+//Route::get('/checkout/{id}',[HomeController::class,'checkout'])->name('checkout');
 
-    // Profile management routes
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/approvequery/{id}',[AdminController::class,'approvequery'])->name('approvequery');
 
-    // Admin routes (requires admin role)
-    Route::get('/admin-patients', [PatientController::class, 'index'])->name('admin.patients');
-    Route::get('/admin-doctors', [DoctorController::class, 'index'])->name('admin.doctors');
-    Route::get('/admin-radiologists', [RadiologistController::class, 'index'])->name('admin.radiologists');
-    Route::get('/admin.appointments', [AppointmentController::class, 'index'])->name('admin.appointments');
-    Route::get('/admin.settings', [SettingController::class, 'index'])->name('admin.settings');
 
-       Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('index');
-        Route::patch('/assign-role/{user}', [AdminController::class, 'assignRole'])->name('assignRole');
-        Route::get('/create-user', [AdminController::class, 'createUser'])->name('createUser');
-        Route::post('/create-user', [AdminController::class, 'storeUser'])->name('storeUser');
-     
-       
-        // User management routes
-        Route::prefix('users')->name('users.')->group(function () {
-            Route::get('/', [UserManagementController::class, 'index'])->name('index');
-            Route::get('/{user}/edit', [UserManagementController::class, 'edit'])->name('edit');
-            Route::post('/{user}/edit', [UserManagementController::class, 'update'])->name('update');
-            Route::delete('/{user}', [UserManagementController::class, 'destroy'])->name('destroy');
-        });
-    });
+//Lab Test
+Route::get('/lab-order',[AdminController::class,'labOrder'])->name('lab-order');
+Route::post('/lab-order',[AdminController::class,'storeLabOrder'])->name('lab-order');
+Route::get('/update-laborder/{id}',[AdminController::class,'updateLabOrder'])->name('update-laborder');
+Route::get('/print-order/{id}',[AdminController::class,'printOrder'])->name('print-order');
 
-    // Record management routes (available to radiologists and referring doctors)
-    Route::middleware(['role:radiologist,referring_doctor'])->prefix('records')->name('records.')->group(function () {
-        Route::get('/', [RecordController::class, 'index'])->name('index');
-        Route::get('/create', [RecordController::class, 'create'])->name('create');
-        Route::post('/', [RecordController::class, 'store'])->name('store');
-        Route::get('/{record}', [RecordController::class, 'show'])->name('show');
-        Route::delete('/{record}', [RecordController::class, 'destroy'])->name('destroy');
-    });
 
-    // Patient routes
-    /*Route::middleware(['role:patient'])->group(function () {
-        Route::get('/patient/dashboard', [DashboardController::class, 'index'])->name('patient.dashboard');
-        // Add more patient-specific routes as needed
-    });*/
-    Route::post('/patient-profile', [DashboardController::class, 'patient'])->name('patient.profile');
-    Route::post('/patient-appointments', [DashboardController::class, 'patient'])->name('patient.appointments');
-    Route::resource('appointments', App\Http\Controllers\AppointmentController::class);
-    Route::resource('doctors', App\Http\Controllers\DoctorController::class);
-    Route::resource('patients', App\Http\Controllers\PatientController::class);
-    Route::resource('radiologists', App\Http\Controllers\RadiologistController::class);
-    Route::resource('settings', App\Http\Controllers\SettingController::class);
-    
-    Route::middleware(['role:radiologist,referring_doctor'])->prefix('referrals')->name('referrals.')->group(function () {
-        Route::get('/', [ReferralController::class, 'index'])->name('index');
-        Route::get('/create', [ReferralController::class, 'create'])->name('create');
-        Route::post('/', [ReferralController::class, 'tore'])->name('store');
-        Route::get('/{referral}', [ReferralController::class, 'how'])->name('show');
-        Route::get('/{referral}/edit', [ReferralController::class, 'edit'])->name('edit');
-        Route::patch('/{referral}', [ReferralController::class, 'update'])->name('update');
-        Route::delete('/{referral}', [ReferralController::class, 'destroy'])->name('destroy');
-    });
+//Medi Order
+Route::get('/medi-order',[AdminController::class,'MediOrder'])->name('medi-order');
+Route::get('/update-mediorder/{id}',[AdminController::class,'updateMediOrder'])->name('update-mediorder');
+Route::get('/print-Medi-order/{id}',[AdminController::class,'printMediOrder'])->name('print-Medi-order');
+
+
+//notifications
+Route::get('/notifications',[NotificationController::class,'index'])->name('notifications');
+Route::post('/mark-as-read',[NotificationController::class,'markAsRead'])->name('mark-as-read');
+Route::get('/mark-notification-as-read/{id}', [HomeController::class, 'markNotificationAsRead'])->name('mark-notification-as-read');
