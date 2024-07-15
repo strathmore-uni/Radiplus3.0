@@ -1,6 +1,7 @@
-.profile-picture {
-    width: 100px; /* Adjust size as needed */
-    height: 100px; /* Adjust size as needed */
-    border-radius: 50%; /* Make it circular */
-    overflow: hidden; /* Hide overflow to ensure perfect circle */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
 }
