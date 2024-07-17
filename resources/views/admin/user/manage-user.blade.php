@@ -10,9 +10,9 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Manage Food
+                Manage Users
 
-                <div class="d-flex justify-content-end" style="margin-top: -25px;"><a href="{{route('pharmachy.create')}}" class="btn btn-primary">Add Medicine</a></div>
+                <div class="d-flex justify-content-end" style="margin-top: -25px;"><a href="{{route('users.create')}}" class="btn btn-primary">Add User</a></div>
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">

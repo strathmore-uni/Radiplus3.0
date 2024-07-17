@@ -18,14 +18,15 @@
                 <table id="datatablesSimple">
                     <thead>
                     <tr>
-                        <th>Customer Name</th>
+                        <th>Patient  Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Doctor Name </th>
-                        <th>Messagee</th>
+                        <th>Date</th>
+                      {{--- <th>Doctor Name </th>---}}
+                        <th>Message</th>
                         <th>fee</th>
                         <th>Status</th>
-                        <th>Doctor ID</th>
+                      {{---  <th>Doctor ID</th>---}}
 {{--                        <th>User ID</th>--}}
                         <th>Action</th>
                         <th>Complete</th>
@@ -37,11 +38,12 @@
                             <td>{{$appoint->name}}</td>
                             <td>{{$appoint->email}}</td>
                             <td>{{$appoint->phone}}</td>
-                            <td>{{$appoint->doctor}}</td>
+                            {{---<td>{{$appoint->doctor}}</td>---}}
+                            <td>{{$appoint->date}}</td>
                             <td>{{$appoint->message}}</td>
                             <td>{{$appoint->fee}}</td>
                             <td>{{$appoint->status}}</td>
-                            <td>{{$appoint->doctor_id}}</td>
+                        {{---    <td>{{$appoint->doctor_id}}</td> ---}}
 {{--                            <td>{{$appoint->user_id}}</td>--}}
 
 

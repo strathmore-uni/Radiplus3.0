@@ -6,51 +6,11 @@
                     <div class="site-info">
                         <a href="#"><span class="mai-call text-primary"></span> +2541234567</a>
                         <span class="divider">|</span>
-{{--                        <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>--}}
                         @if(Route::has('login'))
                             @auth
-                                <div class="btn-group" role="group" style="color: white;">
-                                    <a class="btn btn-primary" style="color: white;margin-left: 10px;margin-right: 10px" href="{{ route('myquery') }}">My Query</a>
-
-                                    <div class="btn-group">
-                                        <button type="button" style="background-color: #007bff;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            History
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('myaprescription')}}">Prescription</a>
-                                            <a class="dropdown-item" href="{{route('show-cart-Lab')}}">Lab</a>
-                                            <a class="dropdown-item" href="{{route('show-cartMed')}}">Medicines</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="btn-group ml-2">
-                                        <button type="button" style="background-color: #007bff;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Cart
-                                        </button>
-                                        <div class="dropdown-menu">
-{{--                                            <a class="dropdown-item" href="{{ route('myorder') }}">My Order</a>--}}
-                                            <a class="dropdown-item" href="{{route('show-cart-Lab')}}">Lab</a>
-                                            <a class="dropdown-item" href="{{route('show-cartMed')}}">Medicines</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="btn-group ml-2">
-                                        <button type="button" style="background-color: #007bff;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Order
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ route('myorder') }}">My Order</a>
-                                            <a class="dropdown-item" href="{{route('show-lab-order')}}">Lab</a>
-                                            <a class="dropdown-item" href="{{route('show-Medi-order')}}">Medicines</a>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
+                                <span style="color: Teal;">Welcome to the Radiplus Patient's dashboard</span>
                             @endauth
-                         @endif
-
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-4 text-right text-sm">
@@ -61,13 +21,13 @@
                         <a href="#"><span class="mai-logo-instagram"></span></a>
                     </div>
                 </div>
-            </div> <!-- .row -->
-        </div> <!-- .container -->
-    </div> <!-- .topbar -->
+            </div>
+        </div>
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{route('home')}}"><span class="text-primary">Radi</span>-Plus</a>
+            <a class="navbar-brand" href="{{ route('home') }}"><span class="text-primary">Radi</span>-Plus</a>
 
             <form action="#">
                 <div class="input-group input-navbar">
@@ -85,58 +45,38 @@
             <div class="collapse navbar-collapse" id="navbarSupport">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{route('home')}}">Home</a>
+                        <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('about')}}">About Us</a>
+                        <a class="nav-link" href="{{ route('about') }}">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('alldoctors')}}">Doctors</a>
+                        <a class="nav-link" href="{{ route('alldoctors') }}">Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('allblog')}}">Blogs</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                            <li><a class="dropdown-item" href="{{route('all-report')}}">Lab Test</a></li>
-                            <li><a class="dropdown-item" href="{{route('all-medicine')}}">Pharmacy</a></li>
-                        </ul>
+                        <a class="nav-link" href="#appointmentForm">Appointment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('contact.create')}}">Contact</a>
+                        <a class="nav-link" href="#viewReports">Reports</a>
                     </li>
-
-
                     @if(Route::has('login'))
-                     @auth
+                        @auth
+                            @if(Auth::user()->type == 0)
+                                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                                    {{ __('Profile') }}
+                                </x-responsive-nav-link>
+                            @endif
+                        @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('myappointment')}}" style="background-color:#007bff;color: white; border-radius: 10px;">Appointments</a>
+                                <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('foodpage')}}" style="background-color: #007bff
-                                
-                                ;color: white; margin-left: 7px; border-radius: 10px;">Food</a>
+                                <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
                             </li>
-                            <x-app-layout>
-
-                            </x-app-layout>
-                     @else
-                    <li class="nav-item">
-                        <a class="btn btn-primary ml-lg-3" href="{{route('login')}}">Login</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="btn btn-primary ml-lg-3" href="{{route('register')}}">Register</a>
-                    </li>
                         @endauth
                     @endif
-
-
                 </ul>
-            </div> <!-- .navbar-collapse -->
-        </div> <!-- .container -->
+            </div>
+        </div>
     </nav>
 </header>

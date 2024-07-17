@@ -9,11 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class Appointment extends Model
 {
     use HasFactory;
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
 //    private static $data;
 //
 //    public static function saveAppointment($request)
 //    {
-//        self::$data = new Appointment();
+  //      self::$data = new Appointment();
 //        self::$data->name = $request->name;
 //        self::$data->email = $request->email;
 //        self::$data->date = $request->date;
@@ -27,4 +32,4 @@ class Appointment extends Model
 //        }
 //        self::$data->save();
 //    }
-}
+

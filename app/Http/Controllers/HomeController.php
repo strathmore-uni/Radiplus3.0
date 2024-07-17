@@ -23,6 +23,7 @@ use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Notification; // Import the Notification model
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Notifications\PatientAppointmentNotification;
 
 class HomeController extends Controller
 {
@@ -68,59 +69,71 @@ class HomeController extends Controller
     }
 
     public function appointment(Request $request)
-    {
-        $request->validate([
-            'name' => 'required', // Corrected the spelling of 'required'
-            'email' => 'required|email', // Corrected the spelling of 'required'
-            'date' => 'required|date|after_or_equal:today', // Corrected the spelling of 'required'
-            'phone' => 'required', // Corrected the spelling of 'required'
-            'doctor' => 'required',
-            'doctor_id' => 'required|exists:doctors,id', // Corrected the spelling of 'required'
-        ]);
-    
-        $data = new Appointment(); // Create a new Appointment instance
-    
-        // Populate the appointment data
-        $data->name = $request->input('name');
-        $data->email = $request->input('email');
-        $data->date = $request->input('date');
-        $data->phone = $request->input('phone');
-        $data->doctor = $request->input('doctor');
-        $data->doctor_id = $request->input('doctor_id');
-        $data->fee = $request->input('fee');
-        $data->message = $request->input('message');
-        $data->status = 'In Progress';
-    
-        // Find the selected doctor's data from the Doctor table
-        $selectedDoctor = Doctor::find($request->input('doctor'));
-    
-        if ($selectedDoctor) {
-            $data->doctor = $selectedDoctor->name; // Assuming 'name' is the doctor's name attribute
-            $data->fee = $selectedDoctor->fee; // Assuming 'consultant_fee' is the doctor's fee attribute
-            $data->id = $selectedDoctor->user_id; // Assuming 'consultant_fee' is the doctor's fee attribute
-        }
-    
-        if (Auth::check()) {
-            // If the user is logged in, associate the user ID
-            $data->user_id = Auth::user()->id;
-    
-            if ($data->save()) {
-                // Send a notification to the user
-                $notification = new Notification();
-                $notification->user_id = Auth::user()->id;
-                $notification->title = 'Appointment Booked Successfully';
-                $notification->message = 'Your appointment has been booked successfully. We will contact you soon.';
-                $notification->save();
-    
-                return back()->with('message', 'Appointment booked successfully. We will contact you soon.');
-            } else {
-                return back()->with('error', 'Failed to book the appointment. Please try again.');
-            }
-        } else {
-            return redirect()->route('login')->with('message', 'You need to log in to make an appointment.');
-        }
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+        'date' => 'required|date|after_or_equal:today',
+        'phone' => 'required',
+        'doctor' => 'required',
+        'doctor_id' => 'required|exists:doctors,id',
+    ]);
+
+    $data = new Appointment(); // Create a new Appointment instance
+
+    // Populate the appointment data
+    $data->name = $request->input('name');
+    $data->email = $request->input('email');
+    $data->date = $request->input('date');
+    $data->phone = $request->input('phone');
+    $data->doctor = $request->input('doctor');
+    $data->doctor_id = $request->input('doctor_id');
+    $data->fee = $request->input('fee');
+    $data->message = $request->input('message');
+    $data->status = 'In Progress';
+
+    // Find the selected doctor's data from the Doctor table
+    $selectedDoctor = Doctor::find($request->input('doctor'));
+
+    if ($selectedDoctor) {
+        $data->doctor = $selectedDoctor->name; // Assuming 'name' is the doctor's name attribute
+        $data->fee = $selectedDoctor->fee; // Assuming 'consultant_fee' is the doctor's fee attribute
+        $data->id = $selectedDoctor->user_id; // Assuming 'consultant_fee' is the doctor's fee attribute
     }
 
+    if (Auth::check()) {
+        // If the user is logged in, associate the user ID
+        $data->user_id = Auth::user()->id;
+
+        if ($data->save()) {
+            // Send a notification to the user
+            $notification = new Notification();
+            $notification->user_id = Auth::user()->id;
+            $notification->title = 'Appointment Booked Successfully';
+            $notification->message = 'Your appointment has been booked successfully. We will contact you soon.';
+            $notification->save();
+
+            // Send notifications to all doctors
+            $doctors = User::where('usertype', 2)->get();
+            $details = [
+                'patient_name' => $request->input('name'),
+                'appointment_date' => $request->input('date'),
+                'appointment_url' => url('/appointments/' . $data->id)
+            ];
+
+            foreach ($doctors as $doctor) {
+                $doctor->notify(new PatientAppointmentNotification($details));
+            }
+
+            return back()->with('message', 'Appointment booked successfully. We will contact you soon.');
+        } else {
+            return back()->with('error', 'Failed to book the appointment. Please try again.');
+        }
+    } else {
+        return redirect()->route('login')->with('message', 'You need to log in to make an appointment.');
+    }
+}
+    
     public function myappointment()
     {
         if (Auth::id())
@@ -547,5 +560,39 @@ class HomeController extends Controller
         $notification->save();
         return back();
     }
+    public function showPatientReports()
+{
+    return view('user.reports.show-reports');
+}
+
+public function getPatientReports(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+    ]);
+
+    $reports = LabOrder::where('email', $request->email)->get();
+
+    return view('user.reports.show-reports', compact('reports'))->with('email', $request->email);
+}
+
+public function printPatientReport($id)
+{
+    $data = LabOrder::find($id);
+
+    if (!$data) {
+        return redirect()->back()->with('error', 'Report not found');
+    }
+
+    // Resolve the image path and convert to base64
+    if ($data->radiology_image) {
+        $imagePath = storage_path('app/public/' . $data->radiology_image);
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $data->radiology_image = 'data:image/' . pathinfo($imagePath, PATHINFO_EXTENSION) . ';base64,' . $imageData;
+    }
+
+    $pdf = PDF::loadView('user.reports.pdf', compact('data'));
+    return $pdf->download('lab_test_details.pdf');
+}
 
 }

@@ -30,6 +30,7 @@
                     <div class="card-body">
                         <form action="{{ Auth::user()->usertype == 5 ? route('lab-order') : route('lab.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
                             @if (Auth::user()->usertype == 5)
                                 <div class="row mb-3">
@@ -102,6 +103,36 @@
                                     </div>
                                 </div>
 
+                                <!-- Address Field -->
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" name="address" type="text" placeholder="Address" />
+                                            <label for="address">Address</label>
+                                            <span class="text-danger">
+                                                @error('address')
+                                                    {{$message}}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Test ID Field -->
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" name="test_id" type="number" placeholder="Test ID" />
+                                            <label for="test_id">Test ID</label>
+                                            <span class="text-danger">
+                                                @error('test_id')
+                                                    {{$message}}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row mb-3">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3 mb-md-0">
@@ -146,14 +177,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            @else
+                            @elseif (Auth::user()->usertype == 2)
                                 <div class="row mb-3">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" name="name" type="text" placeholder="Test Name" />
-                                            <label for="name">Test Name</label>
+                                            <input class="form-control" name="test_name" type="text" placeholder="Test Name" />
+                                            <label for="test_name">Test Name</label>
                                             <span class="text-danger">
-                                                @error('name')
+                                                @error('test_name')
                                                     {{$message}}
                                                 @enderror
                                             </span>
@@ -164,7 +195,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" id="inputPassword" name="code" type="text" placeholder="Code" required/>
+                                            <input class="form-control" name="code" type="text" placeholder="Code" />
                                             <label for="code">Code</label>
                                             <span class="text-danger">
                                                 @error('code')
@@ -178,15 +209,10 @@
                                 <div class="row mb-3">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <select class="form-control" id="inputRoom" name="room" required>
-                                                <option value="" disabled selected>Select Room</option>
-                                                @for ($i = 1; $i <= 10; $i++)
-                                                    <option value="Room {{ $i }}" {{ old('room') == 'Room ' . $i ? 'selected' : '' }}>Room {{ $i }}</option>
-                                                @endfor
-                                            </select>
-                                            <label for="inputRoom">Room No</label>
+                                            <input class="form-control" name="description" type="text" placeholder="Description" />
+                                            <label for="description">Description</label>
                                             <span class="text-danger">
-                                                @error('room')
+                                                @error('description')
                                                     {{$message}}
                                                 @enderror
                                             </span>
@@ -197,10 +223,44 @@
                                 <div class="row mb-3">
                                     <div class="col-md-12">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" id="inputPassword" value="{{old('description')}}" name="description" type="text" placeholder="Description" />
-                                            <label for="description">Description</label>
+                                            <input class="form-control" name="price" type="number" placeholder="Price" min="100" max="200" />
+                                            <label for="price">Price (100-200)</label>
                                             <span class="text-danger">
-                                                @error('description')
+                                                @error('price')
+                                                    {{$message}}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <select class="form-control" name="room">
+                                                <option value="" disabled selected>Select Room</option>
+                                                @for ($i = 1; $i <= 10; $i++)
+                                                    <option value="Room {{ $i }}" {{ old('room') == 'Room ' . $i ? 'selected' : '' }}>Room {{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                            <label for="room">Room No</label>
+                                            <span class="text-danger">
+                                                @error('room')
+                                                    {{$message}}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Test ID Field -->
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" name="test_id" type="number" placeholder="Test ID" />
+                                            <label for="test_id">Test ID</label>
+                                            <span class="text-danger">
+                                                @error('test_id')
                                                     {{$message}}
                                                 @enderror
                                             </span>

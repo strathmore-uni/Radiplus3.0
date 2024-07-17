@@ -6,6 +6,8 @@
 
                 <div class="sb-sidenav-menu-heading">Core</div>
                 <a class="nav-link" href="{{route('home')}}">
+
+
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
@@ -29,17 +31,17 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Manage Prescription
                             </a>
-                            
+
                             <div class="sb-sidenav-menu-heading">Laboratory Tests</div>
                             <a class="nav-link" href="{{route('lab.create')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                 Make order to lab
+                                Make order to lab
                             </a>
 
                             <div class="sb-sidenav-menu-heading">Laboratory Tests</div>
                             <a class="nav-link" href="{{route('lab-order')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Check Orders
+                                View lab report
                             </a>
 
                         @endif
@@ -52,35 +54,30 @@
                     @auth
                         @if(Auth::user()->usertype == 1)
                             <div class="sb-sidenav-menu-heading">Users</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#users"
-                                aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link" href="{{ route('users.create') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
-                                Users
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                Add User
+                            </a>
+                            <a class="nav-link" href="{{ route('users.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                                Manage Users
                             </a>
 
-                            <div class="collapse" id="users" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{route('users.create')}}">Add User</a>
-                                    <a class="nav-link" href="{{route('users.index')}}">Manage Users</a>
-                                </nav>
-                            </div>
                             {{-- Doctors--}}
 
 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#user"
-                                aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
-                                Doctors
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
 
-                            <div class="collapse" id="user" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{route('doctor.create')}}">Add Doctor</a>
-                                    <a class="nav-link" href="{{route('doctor.index')}}">Manage Doctors</a>
-                                </nav>
-                            </div>
+                            <!-- Doctors Section -->
+                            <div class="sb-sidenav-menu-heading">Doctors</div>
+                            <a class="nav-link" href="{{ route('doctor.create') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                                Add Doctor
+                            </a>
+                            <a class="nav-link" href="{{ route('doctor.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                                Manage Doctors
+                            </a>
                         @endif
                     @endauth
                 @endif
@@ -128,44 +125,41 @@
                 @endif
 
 
-                {{-- Food--}}
+                {{-- Food
                 @if(Route::has('login'))
-                    @auth
-                        @if(Auth::user()->usertype == 3 || Auth::user()->usertype == 1)
-                            <div class="sb-sidenav-menu-heading">Food</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#food"
-                                aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-utensils"></i></div>
-                                Food
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
+                @auth
+                @if(Auth::user()->usertype == 3 || Auth::user()->usertype == 1)
+                <div class="sb-sidenav-menu-heading">Food</div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#food"
+                    aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-utensils"></i></div>
+                    Food
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
 
-                            <div class="collapse" id="food" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{route('food.create')}}">Add Food</a>
-                                    <a class="nav-link" href="{{route('food.index')}}">Manage Food</a>
-                                </nav>
-                            </div>
+                <div class="collapse" id="food" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{route('food.create')}}">Add Food</a>
+                        <a class="nav-link" href="{{route('food.index')}}">Manage Food</a>
+                    </nav>
+                </div>
 
-                            {{-- Order--}}
+                {{-- Order--}}
+                {{---
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#order"
+                    aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fa-regular fa-folder"></i></div>
+                    Order
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#order"
-                                aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa-regular fa-folder"></i></div>
-                                Order
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-
-                            <div class="collapse" id="order" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{route('manage.order')}}">Manage Order</a>
-                                    {{-- <a class="nav-link" href="{{route('food.index')}}">Manage Food</a>--}}
-                                </nav>
-                            </div>
-
-                        @endif
-                    @endauth
-                @endif
+                <div class="collapse" id="order" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{route('manage.order')}}">Manage Order</a>
+                        {{-- <a class="nav-link" href="{{route('food.index')}}">Manage Food</a>
+                    </nav>
+                </div>
+                ---}}
 
 
                 {{-- Blog--}}
@@ -212,23 +206,23 @@
                     @auth
                         @if(Auth::user()->usertype == 5 || Auth::user()->usertype == 1)
                             <div class="sb-sidenav-menu-heading">Welcome Radiologist</div>
-                           
+
 
                             <a class="nav-link" href="{{route('medi-order')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Manage Order
                             </a>
-                          
+
 
                             <a class="nav-link" href="{{route('lab.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Manage Test
                             </a>
-                             
+
                             <div class="sb-sidenav-menu-heading">Laboratory Tests</div>
                             <a class="nav-link" href="{{route('lab.create')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                 Add Report
+                                Add Report
                             </a>
 
                             <a class="nav-link" href="{{route('lab-order')}}">

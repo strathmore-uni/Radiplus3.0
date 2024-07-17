@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('user_id');
 
             $table->string('test_name');
-            $table->string('test_id');
+            $table->string('test_id')->default('2');
             $table->string('price');
 
             $table->string('payment_status')->nullable();

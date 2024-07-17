@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class LabOrder extends Model
 {
     use HasFactory;
-        //adding fillables
+
+    // Adding fillables
     protected $fillable = [
-        'test_name', 'price', 'name', 'email', 'phone',  'radiology_image', 'payment_status', 'delivery_status'
+        'test_name', 'price', 'name', 'email', 'phone', 'address', 'radiology_image', 'payment_status', 'delivery_status', 'user_id'
     ];
 }

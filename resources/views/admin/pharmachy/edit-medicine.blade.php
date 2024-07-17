@@ -20,8 +20,8 @@
                             @csrf
                             @method('PUT')
                             <div class="form-floating mb-3 mb-md-0">
-                                <input class="form-control" name="name" type="text" placeholder="Enter Food Name" value="{{$medicine->name}}"/>
-                                <label for="food">Food Name</label>
+                                <input class="form-control" name="name" type="text" placeholder="Enter Medicine Name" value="{{$medicine->name}}"/>
+                                <label for="medicine"> Name</label>
                                 <span class="text-danger">
                                          @error('name')
                                     {{$message}}
@@ -30,8 +30,8 @@
                             </div>
 
                             <div class="form-floating my-3 mb-md-0">
-                                <input class="form-control" name="code" type="text" placeholder="Enter Food Name" value="{{$medicine->code}}"/>
-                                <label for="food">Food Name</label>
+                                <input class="form-control" name="code" type="text" placeholder="Enter Code" value="{{$medicine->code}}"/>
+                                <label for="code">Code</label>
                                 <span class="text-danger">
                                          @error('code')
                                     {{$message}}

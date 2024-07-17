@@ -24,13 +24,9 @@
                                 <label class="form-label">User Type</label>
                                 <select name="usertype" id="usertype" class="form-control" required>
                                     <option value="">Select User Role</option>
-                                    <option value="1">Super Admin</option>
-                                    <option value="0">Regular User</option>
+                                   <option value="0">Patient</option>
                                     <option value="2">Doctor</option>
-                                    <option value="3">Food</option>
-                                    <option value="4">Receptionist</option>
-                                    <option value="5">Lab and Medicine</option>
-                                    <option value="6">Radiologist</option> <!-- Add Radiologist option -->
+                                     <option value="6">Radiologist</option> <!-- Add Radiologist option -->
 
 
                                 </select>
