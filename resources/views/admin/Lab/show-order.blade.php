@@ -24,7 +24,7 @@
                         <th>Sl</th>
                         <th>Test Name</th>
                         <th>Price </th>
-                        <th>Customer Name</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Radiology Image</th>
